@@ -1,0 +1,827 @@
+@prefix : <http://www.semanticweb.org/aron/ontologies/2026/2/62443/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/aron/ontologies/2026/2/62443/> .
+
+<http://www.semanticweb.org/aron/ontologies/2026/2/62443> rdf:type owl:Ontology ;
+                                                           rdfs:comment "Ontology of IEC 62443 for risk assessments of multi robot systems." .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443#hasDataflow
+:hasDataflow rdf:type owl:ObjectProperty ;
+             rdfs:domain :ZoneOrConduit ;
+             rdfs:range :DataFlow ;
+             rdfs:comment """Liste der Datenflüsse – Um Unregelmäßigkeiten zu erkennen, ist es wichtig, den erwarteten Datenfluss (zum Beispiel Quelle, Ziel und Protokoll) im gesamten System und insbesondere den Datenfluss in oder aus eine/einer Zone oder einen/einem Conduit zu identifizieren und zu dokumentieren. 
+(IEC 62443-3-2 §4.7.5.2)"""@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443#hasSecurityProgram
+:hasSecurityProgram rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf owl:topObjectProperty ;
+                    rdfs:domain :SystemUnderConsideration ;
+                    rdfs:range :SecurityProgram .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/affects
+:affects rdf:type owl:ObjectProperty ;
+         owl:inverseOf :isAffectedBy ;
+         rdfs:domain :Threat ;
+         rdfs:range :Asset ;
+         rdfs:comment "Relates something that has an effect to the entity that is affected."@en ;
+         rdfs:label "affects"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/causes
+:causes rdf:type owl:ObjectProperty ;
+        owl:inverseOf :isCausedBy ;
+        rdfs:domain :Threat ;
+        rdfs:range :Event ;
+        rdfs:comment "Relates a causal factor (e.g., Threat) to an Event that it causes."@en ;
+        rdfs:label "causes"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/comprises
+:comprises rdf:type owl:ObjectProperty ;
+           rdfs:domain :ZoneOrConduit ;
+           rdfs:range :Asset ;
+           rdfs:comment """Liste der Betriebsmittel, ihrer Klassifizierung, ihrer Kritikalität und ihres Geschäftswerts – Es ist wichtig, die IACS-Betriebsmittel in jeder Zone oder jedem Conduit sowie ihre Klassifizierung, Kritikalität und ihren Geschäftswert zu identifizieren, um die Folgen einer Kompromittierung der Zone oder des Conduits zu verstehen. Bei der Identifizierung der Folgen ist es wichtig, ebenfalls die Folgen für andere Zonen/Conduits sowie für die/den betrachtete(n) Zone/Conduit zu berücksichtigen.
+
+(IEC 62443-3-2 §4.7.5.2)"""@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/connects
+:connects rdf:type owl:ObjectProperty ;
+          rdfs:domain :Conduit ;
+          rdfs:range :Zone .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/contains
+:contains rdf:type owl:ObjectProperty ;
+          owl:inverseOf :isContainedIn ;
+          rdfs:domain :Risk ;
+          rdfs:range :Consequence ;
+          rdfs:comment "Relates a Risk to a Consequence it contains."@en ;
+          rdfs:label "contains"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/exploits
+:exploits rdf:type owl:ObjectProperty ;
+          owl:inverseOf :isExploitedBy ;
+          rdfs:domain :Threat ;
+          rdfs:range :Vulnerability ;
+          rdfs:comment "Relates a Threat to a Vulnerability it exploits."@en ;
+          rdfs:label "exploits"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/harms
+:harms rdf:type owl:ObjectProperty ;
+       owl:inverseOf :isHarmedBy ;
+       rdfs:domain :Risk ;
+       rdfs:range :AssetOwner ;
+       rdfs:comment "Relates a Risk to an Organization that is harmed by the realization of that risk."@en ;
+       rdfs:label "harms"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasAchievedSecurityLevel
+:hasAchievedSecurityLevel rdf:type owl:ObjectProperty ;
+                          rdfs:domain :IndustrialAutomationControlSystem ,
+                                      :ZoneOrConduit ;
+                          rdfs:range :SecurityLevel ;
+                          rdfs:comment "Erreichte SLs (SL-As) sind die aktuell erreichten Security-Level eines gegebenen Systems. Nachdem ein System-Design verfügbar oder ein System aufgebaut worden ist, werden diese ermittelt. Sie dienen der Feststellung, ob ein Security-System die in den SL-T niedergelegten Ziele erfüllt. (IEC 62443-3-2 Anhang A)"@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasCapabilitySecurityLevel
+:hasCapabilitySecurityLevel rdf:type owl:ObjectProperty ;
+                            rdfs:domain :IndustrialAutomationControlSystem ,
+                                        :ZoneOrConduit ;
+                            rdfs:range :SecurityLevel ;
+                            rdfs:comment "Security Level Capability (SL-Cs) sind die SLs, welche die Komponenten oder Systeme bei richtiger Konfiguration liefern können. Diese Level geben an, dass eine bestimmte Komponente oder ein bestimmtes System bei richtiger Konfiguration und Integration fähig ist, die SL-Ts von sich aus ohne zusätzliche kompensierende Gegenmaßnahmen zu erreichen. (IEC 62443-3-2 Anhang A)"@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasConduit
+:hasConduit rdf:type owl:ObjectProperty ;
+            rdfs:domain :SystemUnderConsideration ;
+            rdfs:range :Conduit .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasConsequence
+:hasConsequence rdf:type owl:ObjectProperty ;
+                rdfs:domain :Event ;
+                rdfs:range :Consequence ;
+                rdfs:comment "Relates an Event to a Consequence it may lead to."@en ;
+                rdfs:label "has consequence"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasEndpoint
+:hasEndpoint rdf:type owl:ObjectProperty ;
+             rdfs:domain :DataFlow ;
+             rdfs:range :ExternalNetwork ,
+                        :Interface ;
+             rdfs:comment """Ein DataFlow mit einem Endpunkt ExternalNetwork modelliert den Datenfluss über die SUC-Grenze ins externe Netz (bzw. umgekehrt).
+
+Ein DataFlow mit allen Endpunkten als Interface modelliert Datenflüsse innerhalb des SUC."""@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasExternalNetwork
+:hasExternalNetwork rdf:type owl:ObjectProperty ;
+                    rdfs:domain :SystemUnderConsideration ;
+                    rdfs:range :ExternalNetwork .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasInterface
+:hasInterface rdf:type owl:ObjectProperty ;
+              rdfs:domain :Asset ,
+                          :ZoneOrConduit ;
+              rdfs:range :Interface ;
+              rdfs:comment """Für ZoneOrConduit gilt, dass zugeordnetes Interface sowohl die logische grenze, als auch die logischen Zugangspunkte bilden:
+
+Logische Grenze – Die logische Grenze ist wichtig, da sie die Grenze zwischen der Zone oder dem Conduit und dem Rest des Systems darstellt. Darüber hinaus hilft sie, den Abgrenzungspunkt für jede Kommunikation, die in die Zone oder den Conduit eintritt oder diese verlässt, zu identifizieren. (IEC 62443-3-2 §4.7.5.2)
+
+Liste der logischen Zugangspunkte – Logische Zugangspunkte sind alle Stellen, an denen elektronische Informationen die logische Grenze einer Zone oder eines Conduits überqueren können. Logische Zugangspunkte müssen identifiziert und dokumentiert werden, da sie Schwachstellen haben, die von Bedrohungen ausgenutzt werden können. (IEC 62443-3-2 §4.7.5.2)"""@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasLikelihood
+:hasLikelihood rdf:type owl:ObjectProperty ;
+               rdfs:domain :Event ;
+               rdfs:range :Likelihood ;
+               rdfs:comment "Relates an Event to its Likelihood assessment."@en ;
+               rdfs:label "has likelihood"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasSecurityProperty
+:hasSecurityProperty rdf:type owl:ObjectProperty ;
+                     rdfs:domain :Asset ;
+                     rdfs:range :CIA ;
+                     rdfs:comment "Relates an Asset to a security property (such as confidentiality, integrity, availability) that applies to it."@en ;
+                     rdfs:label "has security property"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasTargetSecurityLevel
+:hasTargetSecurityLevel rdf:type owl:ObjectProperty ;
+                        rdfs:domain :IndustrialAutomationControlSystem ,
+                                    :ZoneOrConduit ;
+                        rdfs:range :SecurityLevel ;
+                        rdfs:comment "Security Level Target (SL-T) bezeichnen das gewünschte Maß an Security für ein bestimmtes IACS, eine Zone oder einen Conduit. Diese wird üblicherweise durch eine Risikobeurteilung eines Systems ermittelt und die Feststellung, dass es einen bestimmten Security-Level für seinen ordnungsgemäßen Betrieb benötigt. (IEC 62443-3-2 Anhang A)"@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasVulnerability
+:hasVulnerability rdf:type owl:ObjectProperty ;
+                  rdfs:domain :Asset ;
+                  rdfs:range :Vulnerability ;
+                  rdfs:comment "Relates an Asset to a Vulnerability it has."@en ;
+                  rdfs:label "has vulnerability"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasZone
+:hasZone rdf:type owl:ObjectProperty ;
+         rdfs:domain :SystemUnderConsideration ;
+         rdfs:range :Zone ;
+         rdfs:comment """Verbundene Zonen oder Conduits – Es ist wichtig, die Verbindung zwischen Zonen und Conduits zu identifizieren, um alle logischen Zugangspunkte in das und innerhalb des System(s) zu identifizieren. Dies wird üblicherweise in einem Zonen- und Conduit-Diagramm dargestellt.
+
+(IEC 62443-3-2 §4.7.5.2)"""@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/isAffectedBy
+:isAffectedBy rdf:type owl:ObjectProperty ;
+              rdfs:comment "Inverse of affects."@en ;
+              rdfs:label "is affected by"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/isCausedBy
+:isCausedBy rdf:type owl:ObjectProperty ;
+            rdfs:label "is caused by"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/isContainedIn
+:isContainedIn rdf:type owl:ObjectProperty ;
+               rdfs:domain :Consequence ;
+               rdfs:range :Risk ;
+               rdfs:label "is contained in"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/isExploitedBy
+:isExploitedBy rdf:type owl:ObjectProperty ;
+               rdfs:domain :Vulnerability ;
+               rdfs:range :Threat ;
+               rdfs:label "is exploited by"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/isHarmedBy
+:isHarmedBy rdf:type owl:ObjectProperty ;
+            rdfs:domain :AssetOwner ;
+            rdfs:range :Risk ;
+            rdfs:label "is harmed by"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/isLedToBy
+:isLedToBy rdf:type owl:ObjectProperty ;
+           owl:inverseOf :leadsTo ;
+           rdfs:domain :Risk ;
+           rdfs:range :Vulnerability ;
+           rdfs:label "is led to by"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/isMitigatedBy
+:isMitigatedBy rdf:type owl:ObjectProperty ;
+               owl:inverseOf :mitigates ;
+               rdfs:domain :Vulnerability ;
+               rdfs:label "is mitigated by"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/isModifiedBy
+:isModifiedBy rdf:type owl:ObjectProperty ;
+              owl:inverseOf :modifies ;
+              rdfs:label "is modified by"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/isOwnedBy
+:isOwnedBy rdf:type owl:ObjectProperty ;
+           owl:inverseOf :owns ;
+           rdfs:domain :Asset ;
+           rdfs:range :AssetOwner ;
+           rdfs:label "is owned by"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/isRealizedBy
+:isRealizedBy rdf:type owl:ObjectProperty ;
+              owl:inverseOf :realizes ;
+              rdfs:domain :Risk ;
+              rdfs:range :Event ;
+              rdfs:comment "Relates a Risk to an Event that realizes this risk."@en ;
+              rdfs:label "is realized by"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/leadsTo
+:leadsTo rdf:type owl:ObjectProperty ;
+         rdfs:domain :Vulnerability ;
+         rdfs:range :Risk ;
+         rdfs:comment "Relates a Vulnerability to a Risk that may result from exploiting this vulnerability."@en ;
+         rdfs:label "leads to"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/mitigates
+:mitigates rdf:type owl:ObjectProperty ;
+           rdfs:domain :Countermeasure ;
+           rdfs:range :Vulnerability ;
+           rdfs:comment "Relates a Countermeasure to the Vulnerability it mitigates."@en ;
+           rdfs:label "mitigates"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/modifies
+:modifies rdf:type owl:ObjectProperty ;
+          rdfs:domain :Countermeasure ;
+          rdfs:range :Risk ;
+          rdfs:comment "Relates something (e.g., Event or Control) to another entity (e.g., Consequence or Risk) whose state or level it modifies."@en ;
+          rdfs:label "modifies"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/owns
+:owns rdf:type owl:ObjectProperty ;
+      rdfs:domain :AssetOwner ;
+      rdfs:range :Asset ;
+      rdfs:comment "Relates an Organization to an Asset that it owns."@en ;
+      rdfs:label "owns"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/realizes
+:realizes rdf:type owl:ObjectProperty ;
+          rdfs:domain :Event ;
+          rdfs:range :Risk ;
+          rdfs:label "realizes"@en .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443#hasCriticality
+:hasCriticality rdf:type owl:DatatypeProperty ;
+                rdfs:domain :Asset ;
+                rdfs:range xsd:integer ;
+                rdfs:comment """Geschäftswert eines Asset.
+Erwartete Werte:
+1 - Gering
+2 - Mittel
+3 - Hoch
+
+
+Aus IEC 62443-3-2 §4.7.5.2:
+Es ist wichtig, die IACS-Betriebsmittel in jeder Zone oder jedem Conduit sowie ihre Klassifizierung, Kritikalität und ihren Geschäftswert zu identifizieren, um die Folgen einer Kompromittierung der Zone oder des Conduits zu verstehen. Bei der Identifizierung der Folgen ist es wichtig, ebenfalls die Folgen für andere Zonen/Conduits sowie für die/den betrachtete(n) Zone/Conduit zu berücksichtigen."""@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443#hasValue
+:hasValue rdf:type owl:DatatypeProperty ;
+          rdfs:domain :Asset ;
+          rdfs:range xsd:integer ;
+          rdfs:comment """Geschäftswert eines Asset.
+Erwartete Werte:
+1 - Gering
+2 - Mittel
+3 - Hoch
+
+
+Aus IEC 62443-3-2 §4.7.5.2:
+Es ist wichtig, die IACS-Betriebsmittel in jeder Zone oder jedem Conduit sowie ihre Klassifizierung, Kritikalität und ihren Geschäftswert zu identifizieren, um die Folgen einer Kompromittierung der Zone oder des Conduits zu verstehen. Bei der Identifizierung der Folgen ist es wichtig, ebenfalls die Folgen für andere Zonen/Conduits sowie für die/den betrachtete(n) Zone/Conduit zu berücksichtigen."""@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasAssumptionsAndDependencies
+:hasAssumptionsAndDependencies rdf:type owl:DatatypeProperty ;
+                               rdfs:subPropertyOf owl:topDataProperty ;
+                               rdfs:domain :ZoneOrConduit ;
+                               rdfs:range xsd:string ;
+                               rdfs:comment """Annahmen und externe Abhängigkeiten – Oftmals hängt die Security einer Zone oder eines Conduits von Faktoren außerhalb der Zone oder des Conduits wie etwa umweltfreundlicher Energie und zusätzlichen Ebenen der physischen und Netzwerksecurity ab. Diese Annahmen und gegenseitigen Abhängigkeiten sollten dokumentiert werden.
+
+(IEC 62443-3-2 §4.7.5.2)"""@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasFR1IdentificationAndAuthenticationControlSL
+:hasFR1IdentificationAndAuthenticationControlSL rdf:type owl:DatatypeProperty ;
+                                                rdfs:subPropertyOf owl:topDataProperty ;
+                                                rdfs:domain :SecurityLevel ;
+                                                rdfs:range xsd:integer ;
+                                                rdfs:comment """Alle Nutzer (Menschen, Softwareprozesse und Geräte) identifizieren und authentifizieren, bevor ihnen der Zugang zum Automatisierungssystem gewährt wird.
+– SL 1 – Identifizieren und Authentifizieren aller Nutzer (Menschen, Softwareprozesse und Geräte) durch Verfahren, die gegen gelegentlichen oder zufälligen Zugang von nicht authentifizierten Personen oder Stellen schützen.
+– SL 2 – Identifiziere und authentisiere alle Nutzer (Menschen, Softwareprozesse und Geräte) durch Verfahren, die gegen einen absichtlichen, nicht authentifizierten Zugang von Personen oder Stellen, die mit einfachen Mitteln, geringen Ressourcen, allgemeinen Fertigkeiten und geringer Motivation vorgehen, schützen.
+– SL 3 – Identifiziere und authentisiere alle Nutzer (Menschen, Softwareprozesse und Geräte) durch Verfahren, die gegen einen absichtlichen, nicht authentifizierten Zugang von Personen oder Stellen, die mit raffinierten Mitteln, mittleren Ressourcen, IACS-spezifische Fertigkeiten und mittlerer Motivation vorgehen, schützen.
+– SL 4 – Identifiziere und authentisiere alle Nutzer (Menschen, Softwareprozesse und Geräte) durch Verfahren, die gegen einen absichtlichen, nicht authentifizierten Zugang von Personen oder Stellen, die mit raffinierten Mitteln, erheblicher Ressourcen, IACS-spezifische Fertigkeiten und hoher Motivation vorgehen, schützen.
+
+(IEC 62443-3-3 §5.1)"""@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasFR2UseControlSL
+:hasFR2UseControlSL rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf owl:topDataProperty ;
+                    rdfs:domain :SecurityLevel ;
+                    rdfs:range xsd:integer ;
+                    rdfs:comment """Die einem authentifizierten Nutzer (menschlichen Nutzer, Softwareprozess oder Gerät) zugewiesenen Berechtigungen, die es diesem erlauben, die geforderten Aktionen im IACS durchzuführen, durchsetzen sowie die Verwendung dieser Berechtigungen überwachen.
+– 
+	
+SL 1 – Beschränke die Nutzung des IACS entsprechend den festgelegten Berechtigungen, um vor gelegentlichem oder zufälligem Missbrauch zu schützen.
+– 
+	
+SL 2 – Beschränke die Nutzung des IACS entsprechend den festgelegten Berechtigungen, um vor Überlistung durch Personen oder Stellen, die mit einfachen Mitteln bei geringen Ressourcen, allgemeinen Fertigkeiten und geringer Motivation vorgehen, zu schützen.
+– 
+	
+SL 3 – Beschränke die Nutzung des IACS entsprechend den festgelegten Berechtigungen, um vor Überlistung durch Personen oder Stellen, die mit raffinierten Mitteln und mittleren Ressourcen, IACS-spezifischen Fertigkeiten und mittlerer Motivation vorgehen, zu schützen.
+– 
+	
+SL 4 – Beschränke die Nutzung des IACS entsprechend den festgelegten Berechtigungen, um vor Überlistung durch Personen oder Stellen, die mit raffinierten Mitteln und erheblichen Ressourcen, IACS-spezifischen Fertigkeiten und hoher Motivation vorgehen, zu schützen.
+
+(IEC 62443-3-3 §6.1)"""@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasFR3SystemIntegritySL
+:hasFR3SystemIntegritySL rdf:type owl:DatatypeProperty ;
+                         rdfs:subPropertyOf owl:topDataProperty ;
+                         rdfs:domain :SecurityLevel ;
+                         rdfs:range xsd:integer ;
+                         rdfs:comment """Die Integrität des IACS sicherstellen und nicht autorisierte Manipulation verhindern.
+– 
+	
+SL 1 – Schütze die Integrität des IACS gegen gelegentliche oder zufällige Manipulation.
+– 
+	
+SL 2 – Schütze die Integrität des IACS gegen Manipulation durch Personen oder Stellen, die mit einfachen Mitteln, geringen Ressourcen, allgemeinen Fertigkeiten und geringer Motivation vorgehen.
+– 
+	
+SL 3 – Schütze die Integrität des IACS gegen Manipulation durch Personen oder Stellen, die mit raffinierten Mitteln, mittleren Ressourcen, IACS-spezifische Fertigkeiten und mittlerer Motivation vorgehen.
+– 
+	
+SL 4 – Schütze die Integrität des IACS gegen Manipulation durch Personen oder Stellen, die mit raffinierten Mitteln, erheblichen Ressourcen, IACS-spezifische Fertigkeiten und hoher Motivation vorgehen.
+
+(IEC 62443-3-3 §7.1)"""@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasFR4DataConfidentialitySL
+:hasFR4DataConfidentialitySL rdf:type owl:DatatypeProperty ;
+                             rdfs:subPropertyOf owl:topDataProperty ;
+                             rdfs:domain :SecurityLevel ;
+                             rdfs:range xsd:integer ;
+                             rdfs:comment """Die Vertraulichkeit von Daten in Kommunikationskanälen und Datenbeständen sicherstellen, um deren nicht autorisierte Offenlegung zu verhindern.
+– 
+	
+SL 1 – Die nicht autorisierte Offenlegung von Informationen durch Abhören oder zufälliges Aufdecken verhindern.
+– 
+	
+SL 2 – Die nicht autorisierte Offenlegung von Informationen an eine danach aktiv mit einfachen Mitteln bei geringem Aufwand, allgemeinen Fertigkeiten und geringer Motivation suchende Person oder Stelle verhindern.
+– 
+	
+SL 3 – Die nicht autorisierte Offenlegung von Informationen an eine danach aktiv mit raffinierten Mitteln und moderatem Aufwand, IACS-spezifische Fertigkeiten und mittlerer Motivation suchende Person oder Stelle verhindern.
+– 
+	
+SL 4 – Die nicht autorisierte Offenlegung von Informationen an eine danach aktiv mit raffinierten Mitteln und erheblichem Aufwand, IACS-spezifische Fertigkeiten und hoher Motivation suchende Person oder Stelle verhindern.
+
+(IEC 62443-3-3 §8.1)"""@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasFR5RestrictedDataFlowSL
+:hasFR5RestrictedDataFlowSL rdf:type owl:DatatypeProperty ;
+                            rdfs:subPropertyOf owl:topDataProperty ;
+                            rdfs:domain :SecurityLevel ;
+                            rdfs:range xsd:integer ;
+                            rdfs:comment """Das Automatisierungssystem in Zonen und Conduits aufteilen, um einen unnötigen Datenfluss zu verhindern.
+– 
+	
+SL 1 – Verhindere die gelegentliche oder zufällige Umgehung der Aufteilung in Zonen und Conduits.
+– 
+	
+SL 2 – Verhindere die absichtliche Umgehung der Aufteilung in Zonen und Conduits durch Personen oder Stellen, die mit einfachen Mitteln, geringen Ressourcen, allgemeinen Fertigkeiten und geringer Motivation vorgehen.
+– 
+	
+SL 3 – Verhindere die absichtliche Umgehung der Aufteilung in Zonen und Conduits durch Personen oder Stellen, die mit raffinierten Mitteln, mittleren Ressourcen, IACS-spezifische Fertigkeiten und mittlerer Motivation vorgehen.
+– 
+	
+SL 4 – Verhindere die absichtliche Umgehung der Aufteilung in Zonen und Conduits durch Personen oder Stellen, die mit raffinierten Mitteln, erheblichen Ressourcen, IACS-spezifische Fertigkeiten und hoher Motivation vorgehen.
+
+(IEC 62443-3-3 §9.1)"""@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasFR6TimelyResponseToEventsSL
+:hasFR6TimelyResponseToEventsSL rdf:type owl:DatatypeProperty ;
+                                rdfs:subPropertyOf owl:topDataProperty ;
+                                rdfs:domain :SecurityLevel ;
+                                rdfs:range xsd:integer ;
+                                rdfs:comment """Auf Verstöße gegen die IT-Sicherheit durch Benachrichtigen der richtigen Stelle, Beibringen von erforderlichen Beweisen der Verletzung und Veranlassen rechtzeitiger Maßnahmen reagieren, sobald Vorfälle entdeckt worden sind.
+– 
+	
+SL 1 – Überwache den Betrieb des IACS und reagiere auf Vorfälle, sobald diese entdeckt worden sind, durch die Erfassung und Weitergabe forensischer Beweise auf Nachfrage.
+– 
+	
+SL 2 – Überwache den Betrieb des IACS und reagiere auf Vorfälle, sobald diese entdeckt worden sind, durch aktive Erfassung und periodisches Berichten forensischer Beweise.
+– 
+	
+SL 3 – Überwache den Betrieb des IACS und reagiere auf Vorfälle, sobald diese entdeckt worden sind, durch aktive Erfassung und Weiterleiten forensischer Beweise an die richtige Stelle.
+– 
+	
+SL 4 – Überwache den Betrieb des IACS und reagiere auf Vorfälle, sobald diese entdeckt worden sind, durch aktive Erfassung und Weiterleiten forensischer Beweise an die richtige Stelle, in nahezu Echtzeit.
+
+(IEC 62443-3-3 §10.1)"""@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasFR7ResourceAvailabilitySL
+:hasFR7ResourceAvailabilitySL rdf:type owl:DatatypeProperty ;
+                              rdfs:subPropertyOf owl:topDataProperty ;
+                              rdfs:domain :SecurityLevel ;
+                              rdfs:range xsd:integer ;
+                              rdfs:comment """Die Verfügbarkeit des Automatisierungssystems sicherstellen, um der Verschlechterung oder Ablehnung wesentlicher Dienste entgegenzuwirken.
+– 
+	
+SL 1 – Stelle sicher, dass das Automatisierungssystem unter normalen Produktionsbedingungen zuverlässig arbeitet und DoS-Situationen verhindert, die durch gelegentliche oder zufällige Handlungen einer Person oder Stelle verursacht werden.
+– 
+	
+SL 2 – Stelle sicher, dass das Automatisierungssystem unter normalen und außergewöhnlichen Produktionsbedingungen zuverlässig arbeitet und DoS-Situationen durch Personen oder Stellen verhindert, die mit einfachen Mitteln, geringen Ressourcen, allgemeinen Fertigkeiten und geringer Motivation vorgehen.
+– 
+	
+Security-Level SL 3 – Stelle sicher, dass das Automatisierungssystem unter normalen, außergewöhnlichen und extremen Produktionsbedingungen zuverlässig arbeitet und DoS-Situationen durch Personen oder Stellen verhindert, die mit raffinierten Mitteln, mittleren Ressourcen, IACS-spezifische Fertigkeiten und mittlerer Motivation vorgehen.
+– 
+	
+Security-Level SL 4 – Stelle sicher, dass das Automatisierungssystem unter normalen, außergewöhnlichen und extremen Produktionsbedingungen zuverlässig arbeitet und DoS-Situationen durch Personen oder Stellen verhindert, die mit raffinierten Mitteln, erhebliche Ressourcen, IACS-spezifische Fertigkeiten und hoher Motivation vorgehen.
+
+(IEC 62443-3-3 §11.1)"""@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasImpactValue
+:hasImpactValue rdf:type owl:DatatypeProperty ;
+                rdfs:domain :Consequence ;
+                rdfs:range xsd:decimal ;
+                rdfs:comment "Numeric or ordinal value representing the impact associated with a Consequence."@en ,
+                             """Numerischer Wert, der einem Wert einer Folge- oder Schweregradskala entspricht.
+
+Beispiel aus 62443-3-2 Anhang B:
+
+1 - A (Hoch)
+2 - B (Mittel)
+3 - C (gering)"""@de ;
+                rdfs:label "has impact value"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasLikelihoodValue
+:hasLikelihoodValue rdf:type owl:DatatypeProperty ;
+                    rdfs:domain :Likelihood ;
+                    rdfs:range xsd:decimal ;
+                    rdfs:comment "Numeric or ordinal value representing the likelihood of an Event."@en ,
+                                 """Numerischer Wert, der einem Wert einer Wahrscheinlichkeitsskala entspricht.
+
+Beispiel aus 62443-3-2 Anhang B:
+
+1 - Sicher
+2 - Wahrscheinlich
+3 - Möglich
+4 - Unwahrscheinlich
+5 - Sehr unwahrscheinlich"""@de ;
+                    rdfs:label "has likelihood value"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasName
+:hasName rdf:type owl:DatatypeProperty ;
+         rdfs:domain :ZoneOrConduit ;
+         rdfs:range xsd:string ;
+         rdfs:comment """Name und/oder unverwechselbarer Bezeichner – Jede Zone und jeder Conduit muss zu Gestaltungs- und Dokumentationszwecken eindeutig identifiziert werden können.
+
+(IEC 62443-3-2 §4.7.5.2)"""@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasOrganization
+:hasOrganization rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :ZoneOrConduit ;
+                 rdfs:range xsd:string ;
+                 rdfs:comment """Verantwortliche Organisation(en) – Die verantwortliche Organisation ist/sind die Person, Gruppe oder Gruppen, die für die Sicherheit der Zone oder des Conduits verantwortlich und zuständig ist/sind.
+
+(IEC 62443-3-2 §4.7.5.2)"""@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasOverAllSecurityLevel
+:hasOverAllSecurityLevel rdf:type owl:DatatypeProperty ;
+                         rdfs:domain :SecurityLevel ;
+                         rdfs:range xsd:integer ;
+                         rdfs:comment """[Security Level werden] in vier verschiedene Level (1, 2, 3 und 4) eingeteilt, mit jedem Level nimmt die Security zu. SL 0 ist implizit festgelegt als keine Security-Anforderungen oder -Schutz notwendig.
+• SL 1: Schutz gegen beiläufigen oder zufälligen Verstoß
+• SL 2: Schutz gegen einen absichtlichen Verstoß mit einfachen Mitteln und geringem Aufwand, allgemeinen Fertigkeiten und geringer Motivation
+•  SL 3: Schutz gegen einen absichtlichen Verstoß mit hochentwickelten Mitteln und mittlerem Aufwand, IACS-spezifische Fertigkeiten und mittlerer Motivation
+• SL 4: Schutz gegen einen absichtlichen Verstoß mit hochentwickelten Mitteln und erheblichem Aufwand, IACS-spezifische Fertigkeiten und hoher Motivation
+(IEC 62443-3-2 Anhang A)"""@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasRiskValue
+:hasRiskValue rdf:type owl:DatatypeProperty ;
+              rdfs:domain :Risk ;
+              rdfs:range xsd:decimal ;
+              rdfs:comment """Numerischer Wert, der einem Risikowert entspricht.
+
+Beispiel aus 62443-3-2 Anhang B:
+
+1 - Gering
+2 - Gering-mittel
+3 - Mittel
+4 - Mittelhoch
+5 - Hoch"""@de ,
+                           "Quantitative or semi-quantitative value representing the level of a Risk (e.g., combination of likelihood and impact)."@en ;
+              rdfs:label "has risk value"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasSafetyDesignation
+:hasSafetyDesignation rdf:type owl:DatatypeProperty ;
+                      rdfs:subPropertyOf owl:topDataProperty ;
+                      rdfs:domain :ZoneOrConduit ;
+                      rdfs:range xsd:string ;
+                      rdfs:comment """Sicherheitskennzeichnung – Es ist wichtig, anzugeben, ob die Zone oder der Conduit sicherheitsgerichtet ist oder sicherheitsgerichtete Betriebsmittel enthält.
+
+(IEC 62443-3-2 §4.7.5.2)"""@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasSecurityPoliciesAndRequirements
+:hasSecurityPoliciesAndRequirements rdf:type owl:DatatypeProperty ;
+                                    rdfs:subPropertyOf owl:topDataProperty ;
+                                    rdfs:domain :ZoneOrConduit ;
+                                    rdfs:range xsd:string ;
+                                    rdfs:comment """Anzuwendende Security-Anforderungen – Für jede Zone und jeden Conduit müssen die anzuwendenden Security-Anforderungen zum Erreichen des SL-T identifiziert werden. Einige Anforderungen können für alle Zonen und Conduits des SUC gelten, während andere spezifisch sind.
+
+Anzuwendende Security-Leitlinien – Für jede Zone und jeden Conduit müssen die anzuwendenden organisatorischen Security-Leitlinien zum Erreichen des SL-T identifiziert werden. Einige Leitlinien können für alle Zonen und Conduits des SUC gelten, während andere spezifisch sind.
+
+(IEC 62443-3-2 §4.7.5.2)"""@de .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443#Countermeasure
+:Countermeasure rdf:type owl:Class ;
+                rdfs:comment "Tätigkeit, Gerät, Verfahren oder Technik, durch das/die eine Bedrohung, eine Sicherheitslücke oder die Folgen eines Angriffs verringert werden, und zwar durch Beseitigen, Verhindern, Verringern des möglichen Schadens oder durch Entdeckung und Bericht, so dass Korrekturmaßnahmen eingeleitet werden können. (IEC 62443-3-2 §3.1.6)"@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/Asset
+:Asset rdf:type owl:Class ;
+       rdfs:comment "Physikalisches oder logisches Objekt, das für das IACS entweder einen wahrgenommenen oder einen tatsächlichen Wert hat (IEC 62443-3-3 §3.1.1)"@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/AssetOwner
+:AssetOwner rdf:type owl:Class ;
+            rdfs:subClassOf [ rdf:type owl:Restriction ;
+                              owl:onProperty :owns ;
+                              owl:someValuesFrom :Asset
+                            ] ;
+            rdfs:comment "Für ein oder mehrere IACS verantwortliche Person oder Gesellschaft. (IEC 62443-3-3 § 3.2.1)"@de ;
+            rdfs:label "AssetOwner"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/Availability
+:Availability rdf:type owl:Class ;
+              rdfs:subClassOf :CIA ;
+              rdfs:comment "Fähigkeit, einen rechtzeitigen und zuverlässigen Zugang zu den Informationen und zur Funktionalität eines Automatisierungssystems sicherstellen zu können (IEC 62443-3-3 §3.1.8)"@de ;
+              rdfs:label "Availability"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/CIA
+:CIA rdf:type owl:Class ;
+     rdfs:comment "A security property such as confidentiality, integrity, or availability."@en ;
+     rdfs:label "Security property (CIA)"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/Conduit
+:Conduit rdf:type owl:Class ;
+         rdfs:subClassOf :ZoneOrConduit ;
+         owl:disjointWith :Zone ;
+         rdfs:comment "Eine logische Gruppierung von Kommunikationskanälen, die gemeinsamen Security-Anforderungen unterliegen und zwei oder mehr Zonen miteinander verbinden (IEC 62443-3-2 §3.1.3)"@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/Confidentiality
+:Confidentiality rdf:type owl:Class ;
+                 rdfs:subClassOf :CIA ;
+                 rdfs:comment "Bewahrung autorisierter Beschränkungen des Zugangs zu Informationen und deren Offenlegung, dies schließt auch Mittel zum Datenschutz und Schutz eigener Informationen ein (IEC 62443-3-2 §3.1.4)"@de ;
+                 rdfs:label "Confidentiality"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/Consequence
+:Consequence rdf:type owl:Class ;
+             rdfs:comment "Ergebnis eines Zwischenfalls, üblicherweise beschrieben durch seine Gesundheits- und Sicherheitsauswirkungen, Umweltauswirkungen, Sachschäden, Informationsverlust (zum Beispiel geistiges Eigentum) und/oder die Kosten von Betriebsunterbrechungen aufgrund eines bestimmten Zwischenfalls (IEC 62443-3-2 §3.1.5)"@de ,
+                          "The outcome of an event affecting objectives, often measured as impact."@en ;
+             rdfs:label "Consequence"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/DataFlow
+:DataFlow rdf:type owl:Class ;
+          rdfs:comment "Bewegung von Daten durch ein aus Software, Hardware oder einer Kombination aus beidem bestehenden System (IEC 62443-3-2 §3.1.8)"@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/DemilitarizedZone
+:DemilitarizedZone rdf:type owl:Class ;
+                   rdfs:subClassOf :Zone ;
+                   rdfs:comment "Gemeinsames, begrenztes Netz von Servern, das zwei oder mehr Zonen miteinander verbindet, um den Datenfluss zwischen diesen kontrollieren zu können (IEC 62443-3-3 §3.1.19)."@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/EmbeddedDevice
+:EmbeddedDevice rdf:type owl:Class ;
+                rdfs:subClassOf :Asset .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/Event
+:Event rdf:type owl:Class ;
+       rdfs:subClassOf [ rdf:type owl:Restriction ;
+                         owl:onProperty :hasConsequence ;
+                         owl:someValuesFrom :Consequence
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :hasLikelihood ;
+                         owl:someValuesFrom :Likelihood
+                       ] ;
+       rdfs:comment "An occurrence that can lead to undesired consequences affecting assets and objectives."@en ;
+       rdfs:label "Event"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/ExternalNetwork
+:ExternalNetwork rdf:type owl:Class ;
+                 rdfs:comment "Mit dem System under Consideration (SUC) verbundenes Netzwerk, das nicht Teil des SUC ist (IEC 62443-3-2 §3.1.9)"@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/HostDevice
+:HostDevice rdf:type owl:Class ;
+            rdfs:subClassOf :Asset .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/IndustrialAutomationControlSystem
+:IndustrialAutomationControlSystem rdf:type owl:Class ;
+                                   rdfs:comment "Zusammenstellung von Personal, Hardware, Software und Vorgehensweisen, die eingebunden sind in den Betrieb eines industriellen Prozesses und dessen sicheren und zuverlässigen Betrieb beeinträchtigen oder beeinflussen kann (IEC 62443-3-3 §3.1.29)"@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/Integrity
+:Integrity rdf:type owl:Class ;
+           rdfs:subClassOf :CIA ;
+           rdfs:comment "Eigenschaft der Absicherung von Genauigkeit und Vollständigkeit von Schutzobjekten (IEC 62443-3-3 §3.1.30)"@de ;
+           rdfs:label "Integrity"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/Interface
+:Interface rdf:type owl:Class ;
+           rdfs:comment """Logische Zugangspunkte sind alle Stellen, an denen elektronische Informationen die logische Grenze einer Zone oder eines Conduits überqueren können.
+[...]
+Physische Zugangspunkte (zum Beispiel Zäune, Türen und Umschließungen) sind alle Stellen, an denen Personal physischen Zugang zu den Betriebsmitteln der Zone oder des Conduits erhalten kann. (IEC 62443-3-2 §4.7.5.2)"""@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/Likelihood
+:Likelihood rdf:type owl:Class ;
+            rdfs:comment "Möglichkeit, dass etwas geschieht (IEC 62443-3-2 §3.1.11)"@de ,
+                         "The chance that a given Event will occur within a specified time frame or context."@en ;
+            rdfs:label "Likelihood"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/MobileDevice
+:MobileDevice rdf:type owl:Class ;
+              rdfs:subClassOf :Asset .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/NetworkDevice
+:NetworkDevice rdf:type owl:Class ;
+               rdfs:subClassOf :Asset .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/Risk
+:Risk rdf:type owl:Class ;
+      rdfs:subClassOf [ rdf:type owl:Restriction ;
+                        owl:onProperty :contains ;
+                        owl:someValuesFrom :Consequence
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :harms ;
+                        owl:someValuesFrom :AssetOwner
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :isRealizedBy ;
+                        owl:someValuesFrom :Event
+                      ] ;
+      rdfs:comment "Erwarteter Verlust, angegeben als Wahrscheinlichkeit, dass eine bestimmte Bedrohung eine bestimmte Schwachstelle mit einer bestimmten Folge ausnutzt (IEC 62443-3-2 §3.1.14)"@de ,
+                   "The potential that an Event will affect assets and objectives, considering likelihood and consequences."@en ;
+      rdfs:label "Risk"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/SecurityLevel
+:SecurityLevel rdf:type owl:Class ;
+               rdfs:comment """Definition: 
+Maß für die Wahrscheinlichkeit, dass das SUC, die Sicherungszone oder der Conduit frei von Sicherheitslücken ist und in der vorgesehenen Weise funktioniert (IEC 62443-3-2 §3.1.15)
+
+Security Level Vektor:
+Anstatt die Security-Level (SL) zu einer einzigen Zahl [hasOverAllSecurityLevel] zu verdichten, [kann ein] SL-Vektor verwendet [werden], der die sieben grundlegenden Anforderungen (FR) anstelle eines einzigen Schutzfaktors verwendet:
+hasFR1IdentificationAndAuthenticationControlSL
+hasFR2UseControlSL
+hasFR3SystemIntegritySL
+hasFR4DataConfidentialitySL
+hasFR5RestrictedDataFlowSL
+hasFR6TimelyResponseToEventsSL
+hasFR7ResourceAvailabilitySL
+(62443-3-3 §A.3.1)"""@de ,
+                            "Maß des Vertrauens, dass das IACS von Sicherheitslücken frei ist und in der beabsichtigten Weise funktioniert (IEC 62443-3-3 §3.1.38)"@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/SecurityProgram
+:SecurityProgram rdf:type owl:Class ;
+                 rdfs:comment """Portfolio von Security-Diensten, einschließlich Integrationsdiensten und Instandhaltungsdiensten, und die damit verbundenen Leitlinien, Verfahren und Produkte, die auf das IACS anwendbar sind.
+
+Anmerkung 1 zum Begriff: Das Security Program für Betreiber von IACS bezieht sich auf die von ihnen festgelegten Leitlinien und Verfahren, um die Security-Bedenken des IACS zu berücksichtigen. Dazu können technische, prozesstechnische, physische und kompensierende Security-Maßnahmen gehören, die zur Verringerung der Angriffsfläche der Cybersecurity eingesetzt werden. (IEC 62443-2-1 §3.1.15)"""@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/SystemUnderConsideration
+:SystemUnderConsideration rdf:type owl:Class ;
+                          rdfs:comment "Festgelegte Sammlung von Betriebsmitteln des IACS-, die zur Bereitstellung einer vollständigen Automatisierungslösung benötigt werden, einschließlich der gesamten relevanten Netzinfrastruktur (IEC 62443-3-2 §3.1.17)"@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/Threat
+:Threat rdf:type owl:Class ;
+        rdfs:subClassOf [ rdf:type owl:Restriction ;
+                          owl:onProperty :affects ;
+                          owl:someValuesFrom :Asset
+                        ] ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty :causes ;
+                          owl:someValuesFrom :Event
+                        ] ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty :exploits ;
+                          owl:someValuesFrom :Vulnerability
+                        ] ;
+        rdfs:comment "A potential cause of an incident that may result in harm to assets and the organization."@en ,
+                     "Umstand oder Ereignis, bei dem die Möglichkeit einer nachteiligen Auswirkung auf den Betrieb einer Organisation (einschließlich Aufgabe, Funktionen, Ruf oder Ansehen) und/oder die Betriebsmittel einer Organisation einschließlich Industrial Automation Control System besteht (IEC 62443-3-2 §3.1.18)"@de ;
+        rdfs:label "Threat"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/Vulnerability
+:Vulnerability rdf:type owl:Class ;
+               rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                 owl:onProperty :leadsTo ;
+                                 owl:someValuesFrom :Risk
+                               ] ;
+               rdfs:comment "A weakness of an asset or control that can be exploited by one or more threats."@en ,
+                            "Mängel oder Schwäche in der Gestaltung, der Implementierung oder dem Betrieb und Management eines Systems, der/die ausgenutzt werden könnte, um die Integrität oder Security-Strategie des Systems zu verletzen (IEC 62443-3-2 §3.1.24)"@de ;
+               rdfs:label "Vulnerability"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/Zone
+:Zone rdf:type owl:Class ;
+      rdfs:subClassOf :ZoneOrConduit ;
+      rdfs:comment "Gruppierung logischer oder physischer Anlagen auf der Grundlage des Risikos oder anderer Kriterien wie etwa der Kritikalität der Anlagen der Betriebsfunktion, des physischen oder logischen Standorts, des erforderlichen Zugangs (zum Beispiel Prinzip der minimal erforderlichen Rechte) oder der verantwortlichen Organisation (IEC 62443-3-2 §3.1.25)"@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/ZoneOrConduit
+:ZoneOrConduit rdf:type owl:Class ;
+               rdfs:comment "Super class for zones and conduits."@en .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :EmbeddedDevice
+                :HostDevice
+                :MobileDevice
+                :NetworkDevice
+              )
+] .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
