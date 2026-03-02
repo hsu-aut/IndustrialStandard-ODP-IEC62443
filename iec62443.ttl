@@ -13,19 +13,10 @@
 #    Object Properties
 #################################################################
 
-###  http://www.semanticweb.org/aron/ontologies/2026/2/62443#hasDataflow
-:hasDataflow rdf:type owl:ObjectProperty ;
-             rdfs:domain :ZoneOrConduit ;
-             rdfs:range :DataFlow ;
-             rdfs:comment """Liste der Datenflüsse – Um Unregelmäßigkeiten zu erkennen, ist es wichtig, den erwarteten Datenfluss (zum Beispiel Quelle, Ziel und Protokoll) im gesamten System und insbesondere den Datenfluss in oder aus eine/einer Zone oder einen/einem Conduit zu identifizieren und zu dokumentieren. 
-(IEC 62443-3-2 §4.7.5.2)"""@de .
-
-
-###  http://www.semanticweb.org/aron/ontologies/2026/2/62443#hasSecurityProgram
-:hasSecurityProgram rdf:type owl:ObjectProperty ;
-                    rdfs:subPropertyOf owl:topObjectProperty ;
-                    rdfs:domain :SystemUnderConsideration ;
-                    rdfs:range :SecurityProgram .
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443#hasAsset
+:hasAsset rdf:type owl:ObjectProperty ;
+          rdfs:domain :IndustrialAutomationControlSystem ;
+          rdfs:range :Asset .
 
 
 ###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/affects
@@ -118,6 +109,14 @@
                 rdfs:label "has consequence"@en .
 
 
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasDataflow
+:hasDataflow rdf:type owl:ObjectProperty ;
+             rdfs:domain :ZoneOrConduit ;
+             rdfs:range :DataFlow ;
+             rdfs:comment """Liste der Datenflüsse – Um Unregelmäßigkeiten zu erkennen, ist es wichtig, den erwarteten Datenfluss (zum Beispiel Quelle, Ziel und Protokoll) im gesamten System und insbesondere den Datenfluss in oder aus eine/einer Zone oder einen/einem Conduit zu identifizieren und zu dokumentieren. 
+(IEC 62443-3-2 §4.7.5.2)"""@de .
+
+
 ###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasEndpoint
 :hasEndpoint rdf:type owl:ObjectProperty ;
              rdfs:domain :DataFlow ;
@@ -154,12 +153,29 @@ Liste der logischen Zugangspunkte – Logische Zugangspunkte sind alle Stellen, 
                rdfs:label "has likelihood"@en .
 
 
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasSecurityProgram
+:hasSecurityProgram rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf owl:topObjectProperty ;
+                    rdfs:domain :SystemUnderConsideration ;
+                    rdfs:range :SecurityProgram .
+
+
 ###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasSecurityProperty
 :hasSecurityProperty rdf:type owl:ObjectProperty ;
                      rdfs:domain :Asset ;
                      rdfs:range :CIA ;
                      rdfs:comment "Relates an Asset to a security property (such as confidentiality, integrity, availability) that applies to it."@en ;
                      rdfs:label "has security property"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasSourceEndpoint
+:hasSourceEndpoint rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf :hasEndpoint .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasTargetEndpoint
+:hasTargetEndpoint rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf :hasEndpoint .
 
 
 ###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasTargetSecurityLevel
@@ -300,7 +316,17 @@ Liste der logischen Zugangspunkte – Logische Zugangspunkte sind alle Stellen, 
 #    Data properties
 #################################################################
 
-###  http://www.semanticweb.org/aron/ontologies/2026/2/62443#hasCriticality
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasAssumptionsAndDependencies
+:hasAssumptionsAndDependencies rdf:type owl:DatatypeProperty ;
+                               rdfs:subPropertyOf owl:topDataProperty ;
+                               rdfs:domain :ZoneOrConduit ;
+                               rdfs:range xsd:string ;
+                               rdfs:comment """Annahmen und externe Abhängigkeiten – Oftmals hängt die Security einer Zone oder eines Conduits von Faktoren außerhalb der Zone oder des Conduits wie etwa umweltfreundlicher Energie und zusätzlichen Ebenen der physischen und Netzwerksecurity ab. Diese Annahmen und gegenseitigen Abhängigkeiten sollten dokumentiert werden.
+
+(IEC 62443-3-2 §4.7.5.2)"""@de .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasCriticality
 :hasCriticality rdf:type owl:DatatypeProperty ;
                 rdfs:domain :Asset ;
                 rdfs:range xsd:integer ;
@@ -313,31 +339,6 @@ Erwartete Werte:
 
 Aus IEC 62443-3-2 §4.7.5.2:
 Es ist wichtig, die IACS-Betriebsmittel in jeder Zone oder jedem Conduit sowie ihre Klassifizierung, Kritikalität und ihren Geschäftswert zu identifizieren, um die Folgen einer Kompromittierung der Zone oder des Conduits zu verstehen. Bei der Identifizierung der Folgen ist es wichtig, ebenfalls die Folgen für andere Zonen/Conduits sowie für die/den betrachtete(n) Zone/Conduit zu berücksichtigen."""@de .
-
-
-###  http://www.semanticweb.org/aron/ontologies/2026/2/62443#hasValue
-:hasValue rdf:type owl:DatatypeProperty ;
-          rdfs:domain :Asset ;
-          rdfs:range xsd:integer ;
-          rdfs:comment """Geschäftswert eines Asset.
-Erwartete Werte:
-1 - Gering
-2 - Mittel
-3 - Hoch
-
-
-Aus IEC 62443-3-2 §4.7.5.2:
-Es ist wichtig, die IACS-Betriebsmittel in jeder Zone oder jedem Conduit sowie ihre Klassifizierung, Kritikalität und ihren Geschäftswert zu identifizieren, um die Folgen einer Kompromittierung der Zone oder des Conduits zu verstehen. Bei der Identifizierung der Folgen ist es wichtig, ebenfalls die Folgen für andere Zonen/Conduits sowie für die/den betrachtete(n) Zone/Conduit zu berücksichtigen."""@de .
-
-
-###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasAssumptionsAndDependencies
-:hasAssumptionsAndDependencies rdf:type owl:DatatypeProperty ;
-                               rdfs:subPropertyOf owl:topDataProperty ;
-                               rdfs:domain :ZoneOrConduit ;
-                               rdfs:range xsd:string ;
-                               rdfs:comment """Annahmen und externe Abhängigkeiten – Oftmals hängt die Security einer Zone oder eines Conduits von Faktoren außerhalb der Zone oder des Conduits wie etwa umweltfreundlicher Energie und zusätzlichen Ebenen der physischen und Netzwerksecurity ab. Diese Annahmen und gegenseitigen Abhängigkeiten sollten dokumentiert werden.
-
-(IEC 62443-3-2 §4.7.5.2)"""@de .
 
 
 ###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasFR1IdentificationAndAuthenticationControlSL
@@ -587,14 +588,24 @@ Anzuwendende Security-Leitlinien – Für jede Zone und jeden Conduit müssen di
 (IEC 62443-3-2 §4.7.5.2)"""@de .
 
 
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/hasValue
+:hasValue rdf:type owl:DatatypeProperty ;
+          rdfs:domain :Asset ;
+          rdfs:range xsd:integer ;
+          rdfs:comment """Geschäftswert eines Asset.
+Erwartete Werte:
+1 - Gering
+2 - Mittel
+3 - Hoch
+
+
+Aus IEC 62443-3-2 §4.7.5.2:
+Es ist wichtig, die IACS-Betriebsmittel in jeder Zone oder jedem Conduit sowie ihre Klassifizierung, Kritikalität und ihren Geschäftswert zu identifizieren, um die Folgen einer Kompromittierung der Zone oder des Conduits zu verstehen. Bei der Identifizierung der Folgen ist es wichtig, ebenfalls die Folgen für andere Zonen/Conduits sowie für die/den betrachtete(n) Zone/Conduit zu berücksichtigen."""@de .
+
+
 #################################################################
 #    Classes
 #################################################################
-
-###  http://www.semanticweb.org/aron/ontologies/2026/2/62443#Countermeasure
-:Countermeasure rdf:type owl:Class ;
-                rdfs:comment "Tätigkeit, Gerät, Verfahren oder Technik, durch das/die eine Bedrohung, eine Sicherheitslücke oder die Folgen eines Angriffs verringert werden, und zwar durch Beseitigen, Verhindern, Verringern des möglichen Schadens oder durch Entdeckung und Bericht, so dass Korrekturmaßnahmen eingeleitet werden können. (IEC 62443-3-2 §3.1.6)"@de .
-
 
 ###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/Asset
 :Asset rdf:type owl:Class ;
@@ -643,6 +654,11 @@ Anzuwendende Security-Leitlinien – Für jede Zone und jeden Conduit müssen di
              rdfs:comment "Ergebnis eines Zwischenfalls, üblicherweise beschrieben durch seine Gesundheits- und Sicherheitsauswirkungen, Umweltauswirkungen, Sachschäden, Informationsverlust (zum Beispiel geistiges Eigentum) und/oder die Kosten von Betriebsunterbrechungen aufgrund eines bestimmten Zwischenfalls (IEC 62443-3-2 §3.1.5)"@de ,
                           "The outcome of an event affecting objectives, often measured as impact."@en ;
              rdfs:label "Consequence"@en .
+
+
+###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/Countermeasure
+:Countermeasure rdf:type owl:Class ;
+                rdfs:comment "Tätigkeit, Gerät, Verfahren oder Technik, durch das/die eine Bedrohung, eine Sicherheitslücke oder die Folgen eines Angriffs verringert werden, und zwar durch Beseitigen, Verhindern, Verringern des möglichen Schadens oder durch Entdeckung und Bericht, so dass Korrekturmaßnahmen eingeleitet werden können. (IEC 62443-3-2 §3.1.6)"@de .
 
 
 ###  http://www.semanticweb.org/aron/ontologies/2026/2/62443/DataFlow
