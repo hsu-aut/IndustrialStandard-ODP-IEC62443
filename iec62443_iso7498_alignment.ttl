@@ -11,7 +11,7 @@
 <http://www.w3id.org/hsu-aut/IEC62443_ISO7489_alignment> rdf:type owl:Ontology ;
 																 owl:versionIRI <http://www.w3id.org/hsu-aut/IEC62443_ISO7489_alignment/1.0.0> ;
                                                                  owl:imports <https://raw.githubusercontent.com/hsu-aut/IndustrialStandard-ODP-IEC62443/refs/heads/main/iec62443.ttl> ,
-                                                                             <https://raw.githubusercontent.com/hsu-aut/IndustrialStandard-ODP-ISO7498-1/refs/heads/main/ISO7498.ttl?token=GHSAT0AAAAAADWEDZNO4GZJG35DPXKA53TW2NTMCCQ> ;
+                                                                             <https://raw.githubusercontent.com/hsu-aut/IndustrialStandard-ODP-ISO7498-1/refs/heads/main/ISO7498.ttl> ;
 																 owl:versionInfo "1.0.0" .
 
 #################################################################
